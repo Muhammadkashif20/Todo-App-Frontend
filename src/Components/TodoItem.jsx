@@ -6,10 +6,10 @@ const TodoItem = ({ task }) => {
       <span className="text-base">{task}</span>
 
       <div className="flex gap-4">
-        <button className="text-blue-400 hover:text-blue-500 font-medium transition duration-200">
+        <button className="cursor-pointer text-blue-400 hover:text-blue-500 font-medium transition duration-200">
           Edit
         </button>
-        <button className="text-red-400 hover:text-red-500 font-medium transition duration-200">
+        <button className="cursor-pointer text-red-400 hover:text-red-500 font-medium transition duration-200">
           Delete
         </button>
       </div>
