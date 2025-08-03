@@ -1,23 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import TodoItem from "./TodoItem";
 import axios from "axios";
 
 const TodoList = () => {
-  const tasks = [
-    "Learn React Components",
-    "Make a sleek UI",
-    "Push project to GitHub"
-  ];
-  useEffect(()=>{
-      axios.get("http://localhost:3000/todo/getTodo")
-    .then((res)=>res.json())
-    .catch((err)=>console.log(err));
+ const [todos,setTodos]=useState([]);
+ console.log("todos=>",todos);
+
+ useEffect(()=>{
+   axios.get("http://localhost:3000/todo/getTodo")
+   .then((res)=>setTodos(res.data))
+   .catch((err)=>console.log(err));
+   
   },[])
-    
+
+ 
   return (
     <div className="space-y-3 max-h-64 overflow-y-auto pr-1">
-      {tasks.map((task, index) => (
-        <TodoItem key={index} task={task} />
+      {todos?.map((todos) => (
+        <TodoItem key={todos._id} todos={todos} setTodos={setTodos}/>
       ))}
     </div>
   );
