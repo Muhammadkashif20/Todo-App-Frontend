@@ -1,13 +1,14 @@
 import axios from "axios";
 import React from "react";
 
-const TodoItem = ({ todos,setTodos }) => {
-    const handleDelete=()=>{
+const TodoItem = ({ todos,getTodo }) => {
+    const handleDelete = async()=>{
     console.log("delete id=>",todos._id);
-    axios.delete(`http://localhost:3000/todo/deleteTodo/${todos._id}`)
-    let delTodo=todos.filter((todo)=>todos._id !== todo._id)
-    setTodos(delTodo);
-    console.log("delete Todo=>",delTodo)
+    await axios.delete(`http://localhost:3000/todo/deleteTodo/${todos._id}`)
+    getTodo()
+  }
+  const handleEdit = async()=>{
+    await axios.put(`http://localhost:3000/todo/updateTodo/${todos._id}`, {title: todos.title})
   }
 
   return (
@@ -15,7 +16,7 @@ const TodoItem = ({ todos,setTodos }) => {
       <span className="text-base">{todos.title}</span>
 
       <div className="flex gap-4">
-        <button className="cursor-pointer text-blue-400 hover:text-blue-500 font-medium transition duration-200">
+        <button onClick={handleEdit} className="cursor-pointer text-blue-400 hover:text-blue-500 font-medium transition duration-200">
           Edit
         </button>
         <button onClick={handleDelete} className="cursor-pointer text-red-400 hover:text-red-500 font-medium transition duration-200">
