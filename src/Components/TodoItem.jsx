@@ -1,7 +1,8 @@
 import axios from "axios";
 import React from "react";
 
-const TodoItem = ({ todos,getTodo }) => {
+const TodoItem = ({ todos,getTodo,setIsEdit}) => {
+
     const handleDelete = async()=>{
     console.log("delete id=>",todos._id);
     await axios.delete(`http://localhost:3000/todo/deleteTodo/${todos._id}`)
@@ -9,6 +10,7 @@ const TodoItem = ({ todos,getTodo }) => {
   }
   const handleEdit = async()=>{
     await axios.put(`http://localhost:3000/todo/updateTodo/${todos._id}`, {title: todos.title})
+    setIsEdit(true);
   }
 
   return (
