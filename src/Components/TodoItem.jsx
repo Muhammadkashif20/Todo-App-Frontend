@@ -1,17 +1,16 @@
+import { message } from "antd";
 import axios from "axios";
 import React from "react";
 
-const TodoItem = ({ todos,getTodo,setIsEdit}) => {
+const TodoItem = ({ todos,getTodo,handleEdit}) => {
 
     const handleDelete = async()=>{
     console.log("delete id=>",todos._id);
     await axios.delete(`http://localhost:3000/todo/deleteTodo/${todos._id}`)
     getTodo()
+    message.success("Task Deleted Successfully");
   }
-  const handleEdit = async()=>{
-    await axios.put(`http://localhost:3000/todo/updateTodo/${todos._id}`, {title: todos.title})
-    setIsEdit(true);
-  }
+ 
 
   return (
     <div className="flex items-center justify-between bg-white/10 text-white px-5 py-3 rounded-xl border border-white/10 shadow-md">

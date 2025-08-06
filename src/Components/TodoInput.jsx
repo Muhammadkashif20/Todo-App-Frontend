@@ -2,8 +2,8 @@ import { message } from "antd";
 import axios from "axios";
 import React, { useState } from "react";
 
-const TodoInput = ({ getTodo, isEdit }) => {
-  console.log("Edit Value=>", isEdit);
+const TodoInput = ({ getTodo, isEdit,todos }) => {
+  
   const [todoValue, setTodoValue] = useState("");
   const handleAddTodo = async () => {
     if (!todoValue.trim()) {
