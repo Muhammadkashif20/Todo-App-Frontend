@@ -2,7 +2,7 @@ import { message } from "antd";
 import axios from "axios";
 import React, { useState } from "react";
 
-const TodoInput = ({ getTodo, isEdit,todos }) => {
+const TodoInput = ({ getTodo, isEdit }) => {
   
   const [todoValue, setTodoValue] = useState("");
   const handleAddTodo = async () => {
@@ -32,7 +32,7 @@ const TodoInput = ({ getTodo, isEdit,todos }) => {
         onClick={handleAddTodo}
         className="cursor-pointer px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition "
       >
-        {isEdit == true ? "Update" : "Add"}
+       Add
       </button>
     </div>
   );
