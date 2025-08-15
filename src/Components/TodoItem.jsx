@@ -10,77 +10,61 @@ const TodoItem = ({ todos, getTodo }) => {
   console.log("isEdit=>", isEdit);
 
   const handleDelete = async () => {
+    try {
     console.log("delete id=>", todos._id);
     await axios.delete(`http://localhost:3000/todo/deleteTodo/${todos._id}`);
     getTodo();
     message.success("Task Deleted Successfully");
+    } catch (error) {
+      console.log("error=>",error) 
+    }
   };
-
-  // const handleEdit = async () => {
-  //   await axios.put(`<ht></ht>tp://localhost:3000/todo/updateTodo/${todos._id}`, {
-  //     title: todos.title,
-  //   });
-  //   setIsEdit(true);
-  //   console.log("edit id=>", todos._id);
-  //   if (todos._id) {
-  //     setUpdateTodo(todos.title);
-  //   }
-  // };
-
+  const handleSave=async()=>{
+    try {
+       await axios.put(`http://localhost:3000/todo/updateTodo/${todos._id}`, {
+       title: updateTodo,
+     })
+      setIsEdit(false);
+      getTodo()
+      message.success("Task Updated Successfully");
+      console.log("edit id=>", todos._id)
+    } catch (error) {
+       console.error("Error updating todo:", error);
+    }   
+  }
+  const handleEdit=()=>{
+    setIsEdit(true)
+    setUpdateTodo(todos.title)
+  }
   return (
   <div className="flex items-center justify-between bg-white/10 text-white px-5 py-3 rounded-xl border border-white/10 shadow-md">
-    
     {isEdit ? (
       <input
         type="text"
         value={updateTodo}
+        onKeyDown={(e)=>e.key=="Enter" && handleSave()}
         onChange={(e) => setUpdateTodo(e.target.value)}
         className="bg-transparent border-b border-white/30 outline-none text-white px-2 py-1 w-full"
       />
     ) : (
       <span className="text-base">{todos.title}</span>
     )}
-
     <div className="flex gap-4">
-      {/* {isEdit ? (
-        <button
-          onClick={async () => {
-            await axios.put(`http://localhost:3000/todo/updateTodo/${todos._id}`, {
-              title: updateTodo,
-            });
-            setIsEdit(false);
-            getTodo();
-            message.success("Task Updated Successfully");
-          }}
-          className="cursor-pointer text-green-400 hover:text-green-500 font-medium transition duration-200"
-        >
-          Save
-        </button>
-      ) : (
-        <button
-          onClick={() => {
-            setIsEdit(true);
-            setUpdateTodo(todos.title);
-          }}
-          className="cursor-pointer text-blue-400 hover:text-blue-500 font-medium transition duration-200"
-        >
-          Edit
-        </button>
-      )} */}
       {isEdit ? (
         <button
-        onClick={async ()=>
-      await axios.put(`localhost:3000/todo/updateTodo/${todos._id}`, {
-       title: todos.title,
-       
-      )}
-         setIsEdit(true);
-       console.log("edit id=>", todos._id);
+        onClick={handleSave}
        className="cursor-pointer text-green-400 hover:text-green-500 font-medium transition duration-200"
        >
+        Save
        </button>
-    })}
-
+    ):(
+      <button 
+          className="cursor-pointer text-blue-400 hover:text-blue-500 font-medium transition duration-200"
+        onClick={handleEdit}
+      >
+        Edit
+      </button>
+    )}
       <button
         onClick={handleDelete}
         className="cursor-pointer text-red-400 hover:text-red-500 font-medium transition duration-200"
@@ -90,7 +74,7 @@ const TodoItem = ({ todos, getTodo }) => {
     </div>
   </div>
 );
+}
 
-};
 
 export default TodoItem;

@@ -2,7 +2,7 @@ import { message } from "antd";
 import axios from "axios";
 import React, { useState } from "react";
 
-const TodoInput = ({ getTodo, isEdit }) => {
+const TodoInput = ({ getTodo }) => {
   
   const [todoValue, setTodoValue] = useState("");
   const handleAddTodo = async () => {
